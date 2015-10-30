@@ -1,0 +1,100 @@
+﻿<Window x:Class="Backstop.Samples.RestReports.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Backstop Rest Report Sample App" Height="500" Width="525">
+    <Grid Margin="2">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="2">
+            
+            <HeaderedContentControl Header="Backstop URL" IsTabStop="False">
+                <TextBox Text="{Binding Path=BackstopUrl}" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="User Name" IsTabStop="False">
+                <TextBox Text="{Binding Path=Username}" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="Password" IsTabStop="False">
+                <PasswordBox Name="txtPassword"/>
+            </HeaderedContentControl>
+
+            <DockPanel>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding Path=SelectedMethod.Uri, Mode=OneWay}" IsReadOnly="True"  IsTabStop="False" />
+                <StackPanel Orientation="Horizontal">
+                    <HeaderedContentControl Header="Service" IsTabStop="False">
+                        <ComboBox
+                            ItemsSource="{Binding Path=Services}"
+                            SelectedItem="{Binding Path=SelectedService}">
+                        
+                        </ComboBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="Method" Margin="5,0,0,0" IsTabStop="False">
+                        <ComboBox
+                            ItemsSource="{Binding Path=Methods}"
+                            SelectedItem="{Binding Path=SelectedMethod}"
+                            DisplayMemberPath="Method">
+                        
+                        </ComboBox>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </DockPanel>
+
+
+            <HeaderedContentControl Header="Query Definition" IsTabStop="False">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Border x:Name="b" />
+                        <TextBox 
+                            Width="{Binding ActualWidth, ElementName=b}"
+                            TextWrapping="Wrap" AcceptsReturn="True" Height="60"
+                            Text="{Binding Path=QueryDefinition}"
+                            />
+                    </Grid>
+                </ScrollViewer>
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="Restriction Expression" IsTabStop="False">
+                <TextBox Text="{Binding Path=RestrictionExpression}" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="As Of Date" IsTabStop="False">
+                <DatePicker SelectedDate="{Binding Path=AsOfDate}" />
+            </HeaderedContentControl>
+            
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                <Button Name="buttonSubmit" Click="Submit">
+                    Submit
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <TabControl Grid.Column="0" Grid.Row="1">
+            <TabControl.Items>
+                <TabItem Header="Raw">
+                    <ScrollViewer Grid.Column="0" Grid.Row="1">
+                        <Grid>
+                            <Border x:Name="resultBorder" />
+                            <TextBox 
+                                Width="{Binding ActualWidth, ElementName=resultBorder}"
+                                IsReadOnly="True" TextWrapping="Wrap" Text="{Binding Path=Result}" />
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Parsed">
+                    <DataGrid Name="dgParsed" AutoGenerateColumns="True" ItemsSource="{Binding Path=DataTable}">
+                        
+                    </DataGrid>
+                </TabItem>
+            </TabControl.Items>
+        </TabControl>
+    </Grid>
+</Window>
