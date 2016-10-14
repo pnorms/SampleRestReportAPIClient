@@ -35,7 +35,9 @@ namespace Backstop.Samples.RestReports
 
             return new RestClient(this.BackstopUrl)
             {
-                Authenticator = new HttpBasicAuthenticator(this.Username, this.Password)
+                Authenticator = new HttpBasicAuthenticator(this.Username, this.Password),
+                Timeout = 2000000
+                
             };
         }
 

@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Backstop.Samples.RestReports
 {
@@ -125,6 +116,17 @@ namespace Backstop.Samples.RestReports
             DependencyProperty.Register("SelectedMethod", typeof(BackstopRestReportUri), typeof(MainWindow));
 
 
+        public bool IsTestingConnection
+        {
+            get { return (bool)GetValue(IsTestingConnectionProperty); }
+            set { SetValue(IsTestingConnectionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedMethod.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsTestingConnectionProperty =
+            DependencyProperty.Register("IsTestingConnection", typeof(bool), typeof(MainWindow));
+
+
 
         public string Result
         {
@@ -178,9 +180,11 @@ namespace Backstop.Samples.RestReports
         private async void Submit(object sender, RoutedEventArgs e)
         {
             buttonSubmit.IsEnabled = false;
-
+            IsTestingConnection = true;
+            var stopWatch = new Stopwatch();
             try
             {
+                stopWatch.Start();
                 var client = new ReportClient()
                 {
                     BackstopUrl = new Uri(this.BackstopUrl),
@@ -202,6 +206,9 @@ namespace Backstop.Samples.RestReports
             finally
             {
                 buttonSubmit.IsEnabled = true;
+                IsTestingConnection = false;
+                stopWatch.Stop();
+                ProcessTime.Text = $"Processing Time: {(stopWatch.ElapsedMilliseconds/1000).ToString()} seconds.";
             }
         }
 

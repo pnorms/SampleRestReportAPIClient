@@ -63,6 +63,10 @@
     <Compile Include="BackstopRestReportPartialUri.cs" />
     <Compile Include="ReportClient.cs" />
     <Compile Include="ReportParser.cs" />
+    <Page Include="Backstop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

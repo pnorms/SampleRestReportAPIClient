@@ -2,6 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Backstop Rest Report Sample App" Height="500" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Backstop.Samples.RestReports;component/Backstop.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Margin="2">
         
         <Grid.ColumnDefinitions>
@@ -13,7 +20,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="2">
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="2,2,2,10">
             
             <HeaderedContentControl Header="Backstop URL" IsTabStop="False">
                 <TextBox Text="{Binding Path=BackstopUrl}" />
@@ -69,15 +76,50 @@
             <HeaderedContentControl Header="As Of Date" IsTabStop="False">
                 <DatePicker SelectedDate="{Binding Path=AsOfDate}" />
             </HeaderedContentControl>
-            
-            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-                <Button Name="buttonSubmit" Click="Submit">
-                    Submit
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource ButtonStyleBlue}" TabIndex="4" IsDefault="True"  Name="buttonSubmit"                              
+                            HorizontalAlignment="Left" Padding="0" 
+                 		    VerticalAlignment="Top" Click="Submit" Margin="0,10,0,0" Height="34" Width="57" >
+                    <StackPanel>
+                        <Label Content="Submit" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsTestingConnection}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <ContentControl Width="32" ContentTemplate="{StaticResource SpinnerAnimatedIcon}"
+                                        Margin="10,4,0,22" >
+                            <ContentControl.Style>
+                                <Style TargetType="{x:Type ContentControl}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsTestingConnection}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Style>
+                            <ContentControl.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                </TransformGroup>
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                    </StackPanel>
                 </Button>
+                <TextBlock Name="ProcessTime" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="14"></TextBlock>
             </StackPanel>
+            
         </StackPanel>
 
-        <TabControl Grid.Column="0" Grid.Row="1">
+        <TabControl Grid.Column="0" Grid.Row="1" Margin="0">
             <TabControl.Items>
                 <TabItem Header="Raw">
                     <ScrollViewer Grid.Column="0" Grid.Row="1">
