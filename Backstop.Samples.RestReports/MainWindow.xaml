@@ -76,6 +76,9 @@
             <HeaderedContentControl Header="As Of Date" IsTabStop="False">
                 <DatePicker SelectedDate="{Binding Path=AsOfDate}" />
             </HeaderedContentControl>
+            <HeaderedContentControl Header="Group" IsTabStop="False">
+                <TextBox Text="{Binding Path=Grouping}" />
+            </HeaderedContentControl>
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonStyleBlue}" TabIndex="4" IsDefault="True"  Name="buttonSubmit"                              
                             HorizontalAlignment="Left" Padding="0" 

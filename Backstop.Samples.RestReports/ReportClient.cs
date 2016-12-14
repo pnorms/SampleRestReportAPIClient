@@ -19,6 +19,7 @@ namespace Backstop.Samples.RestReports
         public string QueryDefinition { get; set; }
         public string RestrictionExpression { get; set; }
         public DateTime AsOfDate { get; set; }
+        public string Grouping { get; set; }
 
         public ReportClient()
         {
@@ -50,7 +51,7 @@ namespace Backstop.Samples.RestReports
             request.AddParameter("queryDefinition", this.QueryDefinition);
             request.AddParameter("restrictionExpression", this.RestrictionExpression);
             request.AddParameter("asOf", this.AsOfDate.ToString("yyyy-MM-dd"));
-
+            request.AddParameter("grouping", this.Grouping);
             return request;
         }
 

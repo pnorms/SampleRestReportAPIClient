@@ -55,6 +55,15 @@ namespace Backstop.Samples.RestReports
         public static readonly DependencyProperty RestrictionExpressionProperty =
             DependencyProperty.Register("RestrictionExpression", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
+        public string Grouping
+        {
+            get { return (string)GetValue(GroupingProperty); }
+            set { SetValue(GroupingProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Grouping.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GroupingProperty =
+            DependencyProperty.Register("Grouping", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
 
         public DateTime AsOfDate
@@ -193,7 +202,8 @@ namespace Backstop.Samples.RestReports
                     ReportRestMethod = this.SelectedMethod.Uri,
                     QueryDefinition = this.QueryDefinition,
                     RestrictionExpression = this.RestrictionExpression,
-                    AsOfDate = this.AsOfDate
+                    AsOfDate = this.AsOfDate,
+                    Grouping = this.Grouping
                 };
 
                 this.Result = await client.InvokeAsync();
