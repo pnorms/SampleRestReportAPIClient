@@ -33,6 +33,9 @@ namespace Backstop.Samples.RestReports
                 throw new InvalidOperationException("Username has not been initialized.");
             if (string.IsNullOrEmpty(this.Password))
                 throw new InvalidOperationException("Password has not been initialized.");
+            
+            // Force TLS 1.2 as this is the only version currently supported by BSS            
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             return new RestClient(this.BackstopUrl)
             {
